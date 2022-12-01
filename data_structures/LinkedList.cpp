@@ -81,9 +81,21 @@ public:
     return getNode(index)->value;
   }
 
-  int pop(int index) {
-    length--;
-    return 0;
+  void pop() {
+    if(head) {
+      if(length == 1) {
+        delete head;
+      }
+      else {
+        LinkedListNode* newLastNode = getNode(length-2);
+        LinkedListNode* oldLastNode = lastNode();
+
+        delete oldLastNode;
+        newLastNode->nextElement = nullptr;
+
+      }
+      length--;
+    }
   }
 
   int remove(int index) {
@@ -146,6 +158,9 @@ int main() {
   list.append(9);
   list.append(12);
   list.insert(1, 20);
+  list.pop();
+  list.pop();
+  list.pop();
 
   cout << list;
 }
