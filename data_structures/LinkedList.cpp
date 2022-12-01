@@ -70,8 +70,12 @@ public:
     return currentNode->value;
   }
 
-  int remove(int index) {
+  int pop(int index) {
     length--;
+    return 0;
+  }
+
+  int remove() {
     return 0;
   }
 
@@ -79,6 +83,19 @@ public:
   }
 
   void clear() {
+    if(head) {
+      LinkedListNode* currentNode = head;
+      LinkedListNode* nextNode = currentNode->nextElement;
+
+      while(currentNode->nextElement) {
+        delete currentNode;
+        currentNode = nextNode;
+        nextNode = currentNode->nextElement;
+      }
+
+      delete nextNode;
+    }
+
     length = 0;
   }
 
@@ -103,14 +120,10 @@ private:
 int main() {
   LinkedList list;
 
-  list.append(5);
-  list.append(5);
-  list.append(6);
-  list.append(6);
-  list.append(6);
-  list.append(6);
   list.append(9);
   list.append(12);
 
+  cout << list << endl;
+  list.clear();
   cout << list;
 }
