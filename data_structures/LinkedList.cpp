@@ -39,6 +39,19 @@ public:
     return length != 0;
   }
 
+  void shift() {
+    if(head) {
+      if(length == 1) { delete head; } 
+      else {
+        LinkedListNode *tmp = head->nextElement;
+
+        delete head;
+        head = tmp;  
+        length--;
+      }
+    }
+  }
+
   void unshift(int value) {
     LinkedListNode *newNode = new LinkedListNode(value);
     LinkedListNode *tmp;
@@ -83,9 +96,7 @@ public:
 
   void pop() {
     if(head) {
-      if(length == 1) {
-        delete head;
-      }
+      if(length == 1) { delete head; }
       else {
         LinkedListNode* newLastNode = getNode(length-2);
         LinkedListNode* oldLastNode = lastNode();
@@ -98,11 +109,20 @@ public:
     }
   }
 
-  int remove(int index) {
-    return 0;
-  }
+  void remove(int index) {
+    if(head) {
+      if(index + 1 == length) { pop(); }
+      else if(index == 0) { shift(); }
 
-  void search(int value) {
+      else {
+        LinkedListNode* prevNode = getNode(index-1);
+        LinkedListNode* selectedNode = getNode(index);
+
+        prevNode->nextElement = selectedNode->nextElement;
+        delete selectedNode;
+      }
+      length--;
+    }
   }
 
   void clear() {
