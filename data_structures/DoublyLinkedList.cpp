@@ -8,6 +8,7 @@ class DoublyLinkedListNode {
 public:
   int value;
   DoublyLinkedListNode *nextNode = nullptr;
+  DoublyLinkedListNode *prevNode = nullptr;
 
   DoublyLinkedListNode(int value) : value(value) {}
 };
@@ -73,6 +74,7 @@ public:
     }
     else {
       DoublyLinkedListNode *last = lastNode();
+      newNode->prevNode = last;
       last->nextNode = newNode;
     }
 
