@@ -165,6 +165,30 @@ public:
     }
   }
   
+  void recursiveReverse(LinkedListNode* node) {
+    if(node->nextNode == nullptr) {
+      head = node;
+      return;
+    }
+
+    recursiveReverse(node->nextNode);
+    LinkedListNode* tmp = node->nextNode;
+    tmp->nextNode = node;
+    node->nextNode = nullptr;
+  }
+
+  LinkedListNode *getNode(int index) {
+    if (index >= length || head == nullptr ) { throw out_of_range(""); }
+ 
+    LinkedListNode *currentNode = head;
+
+    for (int i = 0; i < index; i++) {
+      currentNode = currentNode->nextNode;
+    }
+
+    return currentNode;
+  }
+
 private:
   LinkedListNode *head = nullptr;
 
@@ -181,17 +205,7 @@ private:
     return nullptr;
   }
 
-  LinkedListNode *getNode(int index) {
-    if (index >= length || head == nullptr ) { throw out_of_range(""); }
- 
-    LinkedListNode *currentNode = head;
-
-    for (int i = 0; i < index; i++) {
-      currentNode = currentNode->nextNode;
-    }
-
-    return currentNode;
-  }
+  
 };
 
 int main() {
@@ -213,6 +227,6 @@ int main() {
 
   list.remove(2);
   cout << list << endl;
-  list.reverse();
+  list.recursiveReverse(list.getNode(0));
   cout << list;
 }
