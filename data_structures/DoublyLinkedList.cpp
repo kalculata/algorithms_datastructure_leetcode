@@ -49,7 +49,9 @@ public:
         DoublyLinkedListNode *tmp = head->nextNode;
 
         delete head;
-        head = tmp;  
+        head = tmp; 
+        tmp->prevNode = nullptr;
+
         length--;
       }
     }
@@ -59,10 +61,15 @@ public:
     DoublyLinkedListNode *newNode = new DoublyLinkedListNode(value);
     DoublyLinkedListNode *tmp;
 
-    tmp = head;
-    head = newNode;
-    newNode->nextNode = tmp;
-  
+    if(head) {
+      tmp  = head;
+      head = newNode;
+      tmp->prevNode     = newNode;
+      newNode->nextNode = tmp;
+    } else {
+      head = newNode;
+    }
+
     length++;
   }
 
@@ -88,7 +95,8 @@ public:
       DoublyLinkedListNode* newNode  = new DoublyLinkedListNode(value);
       DoublyLinkedListNode* prevNode = getNode(index-1);
 
-      newNode->nextNode = prevNode->nextNode;
+      newNode->prevNode  = prevNode;
+      newNode->nextNode  = prevNode->nextNode;
       prevNode->nextNode = newNode;
     }
     length++;
@@ -121,10 +129,12 @@ public:
       else if(index == 0) { shift(); }
 
       else {
-        DoublyLinkedListNode* prevNode = getNode(index-1);
+        DoublyLinkedListNode* prevNode     = getNode(index-1);
         DoublyLinkedListNode* selectedNode = getNode(index);
+        DoublyLinkedListNode* nextNode     = selectedNode->nextNode;
 
-        prevNode->nextNode = selectedNode->nextNode;
+        prevNode->nextNode = nextNode;
+        nextNode->prevNode = prevNode;
         delete selectedNode;
       }
       length--;
@@ -150,34 +160,6 @@ public:
     length = 0;
   }
   
-  void reverse() {
-    if(length > 1) {
-      DoublyLinkedListNode* currentNode = head;
-      DoublyLinkedListNode* prevNode = nullptr;
-      DoublyLinkedListNode* nextNode;
-
-      while(currentNode) {
-        nextNode = currentNode->nextNode;
-        currentNode->nextNode = prevNode;
-        prevNode = currentNode;
-        currentNode = nextNode;
-      }
-
-      head = prevNode;
-    }
-  }
-  
-  void recursiveReverse(DoublyLinkedListNode* node) {
-    if(node->nextNode == nullptr) {
-      head = node;
-      return;
-    }
-
-    recursiveReverse(node->nextNode);
-    DoublyLinkedListNode* tmp = node->nextNode;
-    tmp->nextNode = node;
-    node->nextNode = nullptr;
-  }
 
   DoublyLinkedListNode *getNode(int index) {
     if (index >= length || head == nullptr ) { throw out_of_range(""); }
@@ -213,20 +195,16 @@ int main() {
 
   list.append(9);
   list.append(12);
-  // list.insert(1, 20);
-  // list.pop();
-  // list.pop();
-  // list.pop();
-  // list.pop();
+  list.insert(1, 20);
+  list.pop();
+  list.pop();
+  list.pop();
+  list.pop();
 
-  // list.unshift(6);
-  // list.unshift(5);
-  // list.unshift(3);
-  // list.unshift(2);
-  // list.unshift(1);
-
-  // list.remove(2);
-  // cout << list << endl;
-  // list.recursiveReverse(list.getNode(0));
+  list.unshift(6);
+  list.unshift(5);
+  list.unshift(3);
+  cout << list << endl;
+  list.clear();
   cout << list;
 }
