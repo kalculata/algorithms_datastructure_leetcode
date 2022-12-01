@@ -39,6 +39,17 @@ public:
     return length != 0;
   }
 
+  void unshift(int value) {
+    LinkedListNode *newNode = new LinkedListNode(value);
+    LinkedListNode *tmp;
+
+    tmp = head;
+    head = newNode;
+    newNode->nextElement = tmp;
+  
+    length++;
+  }
+
   void append(int value) {
     LinkedListNode *newNode = new LinkedListNode(value);
 
@@ -53,21 +64,21 @@ public:
     length++;
   }
 
-  void insert(int index, int value)
-  {
+  void insert(int index, int value) {
+    if(index == length) { append(value); }
+    else if(index == 0) {unshift(value); }
+    else {
+      LinkedListNode* newNode  = new LinkedListNode(value);
+      LinkedListNode* prevNode = getNode(index-1);
+
+      newNode->nextElement = prevNode->nextElement;
+      prevNode->nextElement = newNode;
+    }
     length++;
   }
 
   int get(int index) {
-    if (index >= length || head == nullptr ) { throw out_of_range(""); }
- 
-    LinkedListNode *currentNode = head;
-
-    for (int i = 0; i < index; i++) {
-      currentNode = currentNode->nextElement;
-    }
-
-    return currentNode->value;
+    return getNode(index)->value;
   }
 
   int pop(int index) {
@@ -75,7 +86,7 @@ public:
     return 0;
   }
 
-  int remove() {
+  int remove(int index) {
     return 0;
   }
 
@@ -115,6 +126,18 @@ private:
 
     return nullptr;
   }
+
+  LinkedListNode *getNode(int index) {
+    if (index >= length || head == nullptr ) { throw out_of_range(""); }
+ 
+    LinkedListNode *currentNode = head;
+
+    for (int i = 0; i < index; i++) {
+      currentNode = currentNode->nextElement;
+    }
+
+    return currentNode;
+  }
 };
 
 int main() {
@@ -122,8 +145,7 @@ int main() {
 
   list.append(9);
   list.append(12);
+  list.insert(1, 20);
 
-  cout << list << endl;
-  list.clear();
   cout << list;
 }
