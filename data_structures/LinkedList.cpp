@@ -7,7 +7,7 @@ using namespace std;
 class LinkedListNode {
 public:
   int value;
-  LinkedListNode *nextElement = nullptr;
+  LinkedListNode *nextNode = nullptr;
 
   LinkedListNode(int value) : value(value) {}
 };
@@ -41,9 +41,11 @@ public:
 
   void shift() {
     if(head) {
-      if(length == 1) { delete head; } 
-      else {
-        LinkedListNode *tmp = head->nextElement;
+      if(length == 1) { 
+        delete head; 
+        head = nullptr;
+      } else {
+        LinkedListNode *tmp = head->nextNode;
 
         delete head;
         head = tmp;  
@@ -58,7 +60,7 @@ public:
 
     tmp = head;
     head = newNode;
-    newNode->nextElement = tmp;
+    newNode->nextNode = tmp;
   
     length++;
   }
@@ -71,7 +73,7 @@ public:
     }
     else {
       LinkedListNode *last = lastNode();
-      last->nextElement = newNode;
+      last->nextNode = newNode;
     }
 
     length++;
@@ -84,8 +86,8 @@ public:
       LinkedListNode* newNode  = new LinkedListNode(value);
       LinkedListNode* prevNode = getNode(index-1);
 
-      newNode->nextElement = prevNode->nextElement;
-      prevNode->nextElement = newNode;
+      newNode->nextNode = prevNode->nextNode;
+      prevNode->nextNode = newNode;
     }
     length++;
   }
@@ -95,14 +97,16 @@ public:
   }
 
   void pop() {
-    if(head) {
-      if(length == 1) { delete head; }
-      else {
+    if(head != nullptr) {
+      if(length == 1) { 
+        delete head; 
+        head = nullptr;
+      } else {
         LinkedListNode* newLastNode = getNode(length-2);
         LinkedListNode* oldLastNode = lastNode();
 
         delete oldLastNode;
-        newLastNode->nextElement = nullptr;
+        newLastNode->nextNode = nullptr;
 
       }
       length--;
@@ -118,7 +122,7 @@ public:
         LinkedListNode* prevNode = getNode(index-1);
         LinkedListNode* selectedNode = getNode(index);
 
-        prevNode->nextElement = selectedNode->nextElement;
+        prevNode->nextNode = selectedNode->nextNode;
         delete selectedNode;
       }
       length--;
@@ -128,20 +132,38 @@ public:
   void clear() {
     if(head) {
       LinkedListNode* currentNode = head;
-      LinkedListNode* nextNode = currentNode->nextElement;
+      LinkedListNode* nextNode = currentNode->nextNode;
 
-      while(currentNode->nextElement) {
+      while(currentNode->nextNode) {
         delete currentNode;
         currentNode = nextNode;
-        nextNode = currentNode->nextElement;
+        nextNode = currentNode->nextNode;
       }
 
       delete nextNode;
+      delete currentNode;
+      head = nullptr;
     }
 
     length = 0;
   }
+  
+  void reverse() {
+    if(length > 1) {
+      LinkedListNode* currentNode = head;
+      LinkedListNode* prevNode = nullptr;
+      LinkedListNode* nextNode;
 
+      while(currentNode) {
+        nextNode = currentNode->nextNode;
+        currentNode->nextNode = prevNode;
+        prevNode = currentNode;
+        currentNode = nextNode;
+      }
+
+      head = prevNode;
+    }
+  }
   
 private:
   LinkedListNode *head = nullptr;
@@ -150,8 +172,8 @@ private:
     if (head) {
       LinkedListNode *currentNode = head;
 
-      while (currentNode->nextElement != nullptr) {
-        currentNode = currentNode->nextElement;
+      while (currentNode->nextNode != nullptr) {
+        currentNode = currentNode->nextNode;
       }
       return currentNode;
     }
@@ -165,7 +187,7 @@ private:
     LinkedListNode *currentNode = head;
 
     for (int i = 0; i < index; i++) {
-      currentNode = currentNode->nextElement;
+      currentNode = currentNode->nextNode;
     }
 
     return currentNode;
@@ -181,6 +203,16 @@ int main() {
   list.pop();
   list.pop();
   list.pop();
+  list.pop();
 
+  list.unshift(6);
+  list.unshift(5);
+  list.unshift(3);
+  list.unshift(2);
+  list.unshift(1);
+
+  list.remove(2);
+  cout << list << endl;
+  list.reverse();
   cout << list;
 }
