@@ -3,7 +3,7 @@ def binarySearch(list, target, first, last):
 	Returns the index position of the target if found, else returns None
 	"""
   if len(list) == 0:
-    return False
+    return None
   
   midpoint = (first + last) // 2
   

@@ -2,7 +2,6 @@ def binarySearch(list, target):
   """
 	Returns the index position of the target if found, else returns None
 	"""
-  print(list)
   if len(list) == 0:
     return False
   else:
