@@ -204,8 +204,6 @@ private:
 
     return nullptr;
   }
-
-  
 };
 
 int main() {
