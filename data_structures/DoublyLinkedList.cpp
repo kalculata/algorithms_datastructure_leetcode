@@ -129,8 +129,8 @@ public:
       else if(index == 0) { shift(); }
 
       else {
-        DoublyLinkedListNode* prevNode     = getNode(index-1);
         DoublyLinkedListNode* selectedNode = getNode(index);
+        DoublyLinkedListNode* prevNode     = selectedNode->prevNode;
         DoublyLinkedListNode* nextNode     = selectedNode->nextNode;
 
         prevNode->nextNode = nextNode;
@@ -160,7 +160,6 @@ public:
     length = 0;
   }
   
-
   DoublyLinkedListNode *getNode(int index) {
     if (index >= length || head == nullptr ) { throw out_of_range(""); }
  
@@ -205,6 +204,6 @@ int main() {
   list.unshift(5);
   list.unshift(3);
   cout << list << endl;
-  list.clear();
+  list.remove(1);
   cout << list;
 }
