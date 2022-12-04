@@ -4,15 +4,15 @@
 
 using namespace std;
 
-class LinkedListNode {
+template <typename T> class LinkedListNode {
 public:
-  int value;
-  LinkedListNode *nextNode = nullptr;
+  T value;
+  LinkedListNode<T> *nextNode = nullptr;
 
-  LinkedListNode(int value) : value(value) {}
+  LinkedListNode<T>(T value) : value(value) {}
 };
 
-class LinkedList {
+template <typename T> class LinkedList {
 public:
   int length = 0;
 
@@ -45,7 +45,7 @@ public:
         delete head; 
         head = nullptr;
       } else {
-        LinkedListNode *tmp = head->nextNode;
+        LinkedListNode<T> *tmp = head->nextNode;
 
         delete head;
         head = tmp;  
@@ -57,9 +57,9 @@ public:
   /// @brief 
   /// Add element at the beginning of a Linked List is performed in O(1) constant time.
   /// @param value 
-  void unshift(int value) {
-    LinkedListNode *newNode = new LinkedListNode(value);
-    LinkedListNode *tmp;
+  void unshift(T value) {
+    LinkedListNode<T> *newNode = new LinkedListNode<T>(value);
+    LinkedListNode<T> *tmp;
 
     tmp = head;
     head = newNode;
@@ -68,26 +68,26 @@ public:
     length++;
   }
 
-  void append(int value) {
-    LinkedListNode *newNode = new LinkedListNode(value);
+  void append(T value) {
+    LinkedListNode<T> *newNode = new LinkedListNode<T>(value);
 
     if (isEmpty()) {
       head = newNode;
     }
     else {
-      LinkedListNode *last = lastNode();
+      LinkedListNode<T> *last = lastNode();
       last->nextNode = newNode;
     }
 
     length++;
   }
 
-  void insert(int index, int value) {
+  void insert(int index, T value) {
     if(index == length) { append(value); }
     else if(index == 0) {unshift(value); }
     else {
-      LinkedListNode* newNode  = new LinkedListNode(value);
-      LinkedListNode* prevNode = getNode(index-1);
+      LinkedListNode<T>* newNode  = new LinkedListNode<T>(value);
+      LinkedListNode<T>* prevNode = getNode(index-1);
 
       newNode->nextNode = prevNode->nextNode;
       prevNode->nextNode = newNode;
@@ -95,7 +95,7 @@ public:
     length++;
   }
 
-  int get(int index) {
+  T get(int index) {
     return getNode(index)->value;
   }
 
@@ -105,8 +105,8 @@ public:
         delete head; 
         head = nullptr;
       } else {
-        LinkedListNode* newLastNode = getNode(length-2);
-        LinkedListNode* oldLastNode = lastNode();
+        LinkedListNode<T>* newLastNode = getNode(length-2);
+        LinkedListNode<T>* oldLastNode = lastNode();
 
         delete oldLastNode;
         newLastNode->nextNode = nullptr;
@@ -121,8 +121,8 @@ public:
       if(index + 1 == length) { pop(); }
       else if(index == 0) { shift(); }
       else {
-        LinkedListNode* prevNode = getNode(index-1);
-        LinkedListNode* selectedNode = getNode(index);
+        LinkedListNode<T>* prevNode = getNode(index-1);
+        LinkedListNode<T>* selectedNode = getNode(index);
 
         prevNode->nextNode = selectedNode->nextNode;
         delete selectedNode;
@@ -133,8 +133,8 @@ public:
 
   void clear() {
     if(head) {
-      LinkedListNode* currentNode = head;
-      LinkedListNode* nextNode = currentNode->nextNode;
+      LinkedListNode<T>* currentNode = head;
+      LinkedListNode<T>* nextNode = currentNode->nextNode;
 
       while(currentNode->nextNode) {
         delete currentNode;
@@ -152,9 +152,9 @@ public:
   
   void reverse() {
     if(length > 1) {
-      LinkedListNode* currentNode = head;
-      LinkedListNode* prevNode = nullptr;
-      LinkedListNode* nextNode;
+      LinkedListNode<T>* currentNode = head;
+      LinkedListNode<T>* prevNode = nullptr;
+      LinkedListNode<T>* nextNode;
 
       while(currentNode) {
         nextNode = currentNode->nextNode;
@@ -167,22 +167,22 @@ public:
     }
   }
   
-  void recursiveReverse(LinkedListNode* node) {
+  void recursiveReverse(LinkedListNode<T>* node) {
     if(node->nextNode == nullptr) {
       head = node;
       return;
     }
 
     recursiveReverse(node->nextNode);
-    LinkedListNode* tmp = node->nextNode;
+    LinkedListNode<T>* tmp = node->nextNode;
     tmp->nextNode = node;
     node->nextNode = nullptr;
   }
 
-  LinkedListNode *getNode(int index) {
+  LinkedListNode<T> *getNode(int index) {
     if (index >= length || head == nullptr ) { throw out_of_range(""); }
  
-    LinkedListNode *currentNode = head;
+    LinkedListNode<T> *currentNode = head;
 
     for (int i = 0; i < index; i++) {
       currentNode = currentNode->nextNode;
@@ -192,11 +192,11 @@ public:
   }
 
 private:
-  LinkedListNode *head = nullptr;
+  LinkedListNode<T> *head = nullptr;
 
-  LinkedListNode *lastNode() {
+  LinkedListNode<T> *lastNode() {
     if (head) {
-      LinkedListNode *currentNode = head;
+      LinkedListNode<T> *currentNode = head;
 
       while (currentNode->nextNode != nullptr) {
         currentNode = currentNode->nextNode;
@@ -209,7 +209,7 @@ private:
 };
 
 // int main() {
-//   LinkedList list;
+//   LinkedList<int> list;
 
 //   list.append(0);
 //   list.append(1);

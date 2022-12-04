@@ -4,7 +4,7 @@
 using namespace std;
 
 /// @brief All operations are performed in O(1) time.
-class Stack {
+template <typename T> class Stack {
   public:
     friend ostream& operator << (ostream& output, Stack& stack) {
       string repr = "[";
@@ -21,15 +21,15 @@ class Stack {
       return output;
     }
 
-    void push(int x) {
-      elements.unshift(x);
+    void push(T value) {
+      elements.unshift(value);
     }
 
     void pop() {
       elements.remove(0);
     }
 
-    int top() {
+    T top() {
       return elements.get(0);
     }
 
@@ -42,18 +42,18 @@ class Stack {
     }
 
   private:
-    LinkedList elements;
+    LinkedList<T> elements;
 };
 
-int main() {
-  Stack stack;
+// int main() {
+//   Stack<int> stack;
 
-  stack.push(1);
-  stack.push(2);
-  stack.push(5);
+//   stack.push(1);
+//   stack.push(2);
+//   stack.push(5);
 
-  cout << stack;
+//   cout << stack << endl;
 
-  stack.pop();
-  cout << stack;
-}
+//   stack.pop();
+//   cout << stack;
+// }
