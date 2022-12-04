@@ -49,8 +49,8 @@ public:
 
         delete head;
         head = tmp;  
-        length--;
       }
+      length--;
     }
   }
 
@@ -120,15 +120,14 @@ public:
     if(head) {
       if(index + 1 == length) { pop(); }
       else if(index == 0) { shift(); }
-
       else {
         LinkedListNode* prevNode = getNode(index-1);
         LinkedListNode* selectedNode = getNode(index);
 
         prevNode->nextNode = selectedNode->nextNode;
         delete selectedNode;
+        length--;
       }
-      length--;
     }
   }
 
@@ -209,25 +208,27 @@ private:
   }
 };
 
-int main() {
-  LinkedList list;
+// int main() {
+//   LinkedList list;
 
-  list.append(9);
-  list.append(12);
-  list.insert(1, 20);
-  list.pop();
-  list.pop();
-  list.pop();
-  list.pop();
+//   list.append(0);
+//   list.append(1);
+//   list.append(2);
+//   list.pop();
+//   list.pop();
+//   list.pop();
+//   list.pop();
 
-  list.unshift(6);
-  list.unshift(5);
-  list.unshift(3);
-  list.unshift(2);
-  list.unshift(1);
+//   list.unshift(6);
+//   list.unshift(5);
+//   list.unshift(3);
+//   list.unshift(2);
+//   list.unshift(1);
 
-  list.remove(2);
-  cout << list << endl;
-  list.recursiveReverse(list.getNode(0));
-  cout << list;
-}
+//   list.remove(2);
+//   cout << list << endl;
+//   list.remove(2);
+
+//   list.recursiveReverse(list.getNode(0));
+//   cout << list;
+// }
