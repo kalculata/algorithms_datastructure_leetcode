@@ -4,3 +4,7 @@
   - examples
     - Stack of disks
     - Stack of dishes
+  - applications:
+    - Recursion
+    - undo in an editor
+    - Parentheses validation

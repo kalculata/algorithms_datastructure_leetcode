@@ -54,6 +54,9 @@ public:
     }
   }
 
+  /// @brief 
+  /// Add element at the beginning of a Linked List is performed in O(1) constant time.
+  /// @param value 
   void unshift(int value) {
     LinkedListNode *newNode = new LinkedListNode(value);
     LinkedListNode *tmp;
