@@ -39,12 +39,16 @@ template <typename T> class Stack {
       elements.unshift(value);
     }
 
-    void pop() {
-      elements.remove(0);
+    T pop() {
+      return elements.shift();
     }
 
     T top() {
       return elements.get(0);
+    }
+
+    void clear() {
+      elements.clear();
     }
 
     bool isEmpty() {
@@ -74,16 +78,3 @@ template <typename T> class Stack {
       return tname;
     }
 };
-
-// int main() {
-//   Stack<string> stack;
-
-//   stack.push("1");
-//   stack.push("2");
-//   stack.push("5");
-
-//   cout << stack << endl;
-
-//   // stack.pop();
-//   // cout << stack << endl;
-// }

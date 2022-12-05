@@ -39,19 +39,23 @@ public:
     return length != 0;
   }
 
-  void shift() {
+  T shift() {
+    T value;
     if(head) {
       if(length == 1) { 
+        value = head->value;
         delete head; 
         head = nullptr;
       } else {
         LinkedListNode<T> *tmp = head->nextNode;
-
+        value = head->value;
         delete head;
         head = tmp;  
       }
       length--;
     }
+
+    return value;
   }
 
   /// @brief 
@@ -99,21 +103,23 @@ public:
     return getNode(index)->value;
   }
 
-  void pop() {
+  T pop() {
+    T value;
     if(head != nullptr) {
       if(length == 1) { 
+        value = head->value;
         delete head; 
         head = nullptr;
       } else {
         LinkedListNode<T>* newLastNode = getNode(length-2);
         LinkedListNode<T>* oldLastNode = lastNode();
-
+        value = oldLastNode->value;
         delete oldLastNode;
         newLastNode->nextNode = nullptr;
-
       }
       length--;
     }
+    return value;
   }
 
   void remove(int index) {
@@ -207,28 +213,3 @@ private:
     return nullptr;
   }
 };
-
-// int main() {
-//   LinkedList<int> list;
-
-//   list.append(0);
-//   list.append(1);
-//   list.append(2);
-//   list.pop();
-//   list.pop();
-//   list.pop();
-//   list.pop();
-
-//   list.unshift(6);
-//   list.unshift(5);
-//   list.unshift(3);
-//   list.unshift(2);
-//   list.unshift(1);
-
-//   list.remove(2);
-//   cout << list << endl;
-//   list.remove(2);
-
-//   list.recursiveReverse(list.getNode(0));
-//   cout << list;
-// }
