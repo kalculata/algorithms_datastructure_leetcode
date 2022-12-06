@@ -7,7 +7,7 @@ int evaluate(string exp) {
   Stack<int> list;
   int res = 0;
 
-  for(int i=0; i<exp.length(); i++) {
+  for(int i=exp.length() - 1; i>=0; i--) {
     int tmp;
 
     if(exp[i] != '*' && exp[i] != '/' && exp[i] != '-' && exp[i] != '+') {
@@ -15,8 +15,8 @@ int evaluate(string exp) {
       list.push(tmp);
     } 
     else {
-      int b = list.pop();
       int a = list.pop();
+      int b = list.pop();
 
       if(exp[i] == '+') {
         tmp = a + b;
@@ -36,5 +36,5 @@ int evaluate(string exp) {
 }
 
 int main() {
-  evaluate("23*54*+9-");
+  evaluate("-+*23*549");
 }

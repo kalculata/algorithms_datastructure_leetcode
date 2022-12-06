@@ -8,3 +8,5 @@
     - Recursion
     - undo in an editor
     - Parentheses validation
+
+- Queue is a list with the restriction that insertion can be performed at one end (rear or tail) and deletion can be performed at other end (front) (First-In First-out).
